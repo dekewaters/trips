@@ -19,4 +19,4 @@ Live: https://dekewaters.github.io/trips/
 4. `python3 tools/check.py tokyo-2027 --shots`
 5. Commit and push. It's live at `/trips/tokyo-2027/` in about a minute.
 
-This repo is public. Never commit booking codes, confirmation numbers, passport numbers or card numbers.
+This repo and every site in it are public. Never commit booking codes, confirmation numbers, passport numbers or card numbers. Keep private dinners and meetings off the sites, and delete a trip folder once the trip is over.

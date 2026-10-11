@@ -51,20 +51,28 @@ Repo: `dekewaters/trips` (public). Live at `https://dekewaters.github.io/trips/<
 ## 5. Build
 1. `cp -r _template <city>-<year>`. Fill in `trip.js`, set `<title>` and the Home Screen name in `index.html`, and bump both `?v=` values to today (YYYYMMDD).
 2. Add the trip to the top of the root `index.html` list.
-3. **Public repo:** NO booking codes, confirmation numbers, passport or card numbers. Booking references belong only in private outputs (doc or PDF).
+3. **Public repo (his choice: Option 1, public and trimmed):** NO booking codes, confirmation numbers, passport or card numbers. Leave private fixed events (team or client dinners, meetings, anyone else's plans) off the site by default; they go in the private doc or PDF. Booking references belong only in private outputs.
 4. Set `updated` to the current local time, so he can tell from his phone whether he has the latest version.
 5. Run `python3 tools/check.py <folder> --shots`. It must show no errors and no empty days. Look at the screenshots, including the Info tab.
 
-## 6. Publish
+## 6. Privacy check (every publish, every time)
+He asked to always be reminded about what he's sharing. Before every push, and in the reply after it, include a short **"What's public"** note:
+- what this push exposes: hotel, dates away, daily times and places, names of other people or private events;
+- anything you left out on purpose;
+- a reminder that anyone with the link can see it, and that git history keeps old versions.
+After the trip ends, remind him to delete the trip folder (the site goes dark; history remains).
+GitHub Pages sites are public even from a private repo on personal plans. Only Enterprise Cloud adds a login. Revisit options 2 (private repo + Pro + random folder names) or 3 (Cloudflare Access) if a trip is sensitive or Riot's travel policy requires it.
+
+## 7. Publish
 - Commit with the session attribution lines and push. GitHub Pages is already on for this repo.
 - Tell him: open the link in Safari, then Share → Add to Home Screen. If it looks stale, check the "updated" line; if it's old, remove and re-add the Home Screen icon.
 - Updates later: edit only `trip.js`, bump `updated` and `?v=`, push.
 
-## 7. Offer extras (only if he wants them)
+## 8. Offer extras (only if he wants them)
 - A Claude Doc with the full plan and a "worth seeing" section. Docs type.
 - An offline PDF field guide (taxi cards, phrases, emergency page). It can include booking codes, because it's private.
 - A message for the group: the link, how to add it to the Home Screen, which apps to install and how to set each up, and a two-tap test.
 
-## 8. Engine changes
+## 9. Engine changes
 - Keep `engine/app.js` backward compatible, because every past trip loads it.
 - To add a link provider: add it to the `P` and `PLABEL` maps (and `NEARP` if it supports near-here search), document it in `_template/trip.js`, then run `check.py` on every trip folder before pushing.
