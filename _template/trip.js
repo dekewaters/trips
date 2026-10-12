@@ -20,6 +20,8 @@
      cut    1 = first thing to drop when running late.
      anchor 1 = this stop follows the day's event time (event.time minus event.early).
      tag    badge key: "food", or any key in badges below (e.g. "val").
+     more   {w:"2-3 sentence blurb", s:[{name, local, note, q}]}: a "More info" expander at the bottom of the card,
+            with "don't miss" spots inside the place. Spots with q get map buttons; leave q off for dishes.
 */
 const HOTEL={name:"Hotel Name",local:"",pid:"",ll:[0,0],phone:"+00 0000 0000",fab:"",tip:"Show this to the driver. If they're unsure, hand them your phone with the hotel on the line."};
 
@@ -31,7 +33,8 @@ const DAYS=[
   event:{label:"Event",time:"18:00",early:30},   /* optional: an editable time box; anchor stops follow it */
   stops:[
   {t:"09:00",name:"Breakfast spot",tag:"food",local:"",q:"",pid:"",ll:[0,0],note:"Opens 8am."},
-  {t:"10:30",cut:1,name:"A sight",ll:[0,0],go:[15,"Walk"],note:"Why it's worth it."},
+  {t:"10:30",cut:1,name:"A sight",ll:[0,0],go:[15,"Walk"],note:"Why it's worth it.",
+   more:{w:"What it is and why it's worth the time.",s:[{name:"A shop inside",local:"",note:"Hours. Why.",q:"search term"},{name:"A dish",note:"Order this."}]}},
   {t:"17:30",fixed:1,anchor:1,name:"Venue",ll:[0,0],go:[25,"Metro"],note:"Doors open early."}],
   lunch:[{name:"Lunch option",pid:"",note:"Hours. What to order."}]}
 ];

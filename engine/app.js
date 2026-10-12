@@ -54,6 +54,11 @@ function links(o){const out=[];
 const NEAR=T.near||{provider:"google",coffee:"coffee",food:"food",restroom:"restroom"};
 const near=ll=>{if(!ll||!NEAR.provider)return "";const f=NEARP[NEAR.provider];const a=(q,l)=>`<a href="${esc(f(q,ll))}"${ext}>${l}</a>`;
  return `<div class="near">${a(NEAR.coffee,"☕ Coffee near here")}${a(NEAR.food,"Food near here")}${NEAR.restroom?a(NEAR.restroom,"Restroom"):""}</div>`};
+/* "More info" expander: stop.more = {w:"blurb", s:[{name, local, note, q}]} (spots with q get map buttons) */
+const moreHtml=(s)=>{const m=s.more;if(!m)return "";
+ const sp=(m.s||[]).map(x=>{const acts=x.q?links({name:x.name,local:x.local,q:x.q,ll:s.ll}):"";
+  return `<li><b>${esc(x.name)}</b>${x.local?`<span class="zh">${esc(x.local)}</span>`:""}${x.note?`<div class="note">${esc(x.note)}</div>`:""}${acts?`<div class="actions">${acts}</div>`:""}</li>`}).join("");
+ return `<details class="more"><summary>${esc(T.moreLabel||"More info")}</summary><div class="mbody">${m.w?`<p>${esc(m.w)}</p>`:""}${sp?`<div class="mlabel">Don't miss</div><ul>${sp}</ul>`:""}</div></details>`};
 const badge=t=>{if(!t)return "";const b=(T.badges||{})[t]||t;return `<span class="badge ${t==="food"?"food":t==="val"?"val":"tag"}">${esc(b)}</span>`};
 
 /* ---------- shell markup ---------- */
@@ -156,7 +161,7 @@ function renderDay(){const n=tzNow();const day=DAYS[sel];const stops=plan(day);c
  const items=stops.map((s,i)=>{const key=day.d+"|"+s.t;const isDone=!!done[key];
   const goLine=s.go&&i>0?`<div class="go">↳ ${esc(s.go[1])} · ~${s.go[0]} min · <span class="lb">leave by ${fmtM(s.eff-s.go[0])}</span></div>`:"";
   const acts=links(s);
-  return `<li class="stop${i===ci?" current":""}${isDone?" isdone":""}${s.atrisk?" atrisk":""}"><div class="t">${fmtM(s.eff)}${s.shifted?`<span class="shift">+${late[day.d]}</span>`:""}</div><span class="dot" aria-hidden="true"></span><div class="card">${goLine}<div class="head"><div class="name">${esc(s.name)}${badge(s.tag)}</div><button class="chk" aria-pressed="${isDone}" aria-label="Mark ${esc(s.name)} done" data-k="${esc(key)}">✓</button></div>${loc(s)?`<span class="zh">${esc(loc(s))}</span>`:""}${s.note?`<div class="note">${esc(s.note)}</div>`:""}${acts?`<div class="actions">${acts}</div>`:""}${near(s.ll)}</div></li>`}).join("");
+  return `<li class="stop${i===ci?" current":""}${isDone?" isdone":""}${s.atrisk?" atrisk":""}"><div class="t">${fmtM(s.eff)}${s.shifted?`<span class="shift">+${late[day.d]}</span>`:""}</div><span class="dot" aria-hidden="true"></span><div class="card">${goLine}<div class="head"><div class="name">${esc(s.name)}${badge(s.tag)}</div><button class="chk" aria-pressed="${isDone}" aria-label="Mark ${esc(s.name)} done" data-k="${esc(key)}">✓</button></div>${loc(s)?`<span class="zh">${esc(loc(s))}</span>`:""}${s.note?`<div class="note">${esc(s.note)}</div>`:""}${acts?`<div class="actions">${acts}</div>`:""}${near(s.ll)}${moreHtml(s)}</div></li>`}).join("");
  $("#day").innerHTML=`<h2 class="dayhead">${esc(day.lbl)} ${+day.d.slice(8)} ${mon(day.d)} · ${esc(day.title)}</h2><p class="daysub">${esc(day.sub||"")}</p><div class="brief">${chips.join("")}</div>${evBox}<ol class="stops">${items}</ol>${day.lunch?`<details class="lunch"${store.get("lunchOpen",false)?" open":""}><summary>Lunch picks for ${esc(day.lbl)}</summary>${optHtml(day.lunch)}</details>`:""}`;
  const det=$("#day details.lunch");if(det)det.addEventListener("toggle",()=>store.set("lunchOpen",det.open));
  const mt=$("#day input[type=time]");if(mt)mt.addEventListener("change",()=>{if(mt.value)evT[day.d]=mt.value;else delete evT[day.d];store.set("event",evT);renderAll()});

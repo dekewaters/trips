@@ -45,6 +45,7 @@ Repo: `dekewaters/trips` (public). Live at `https://dekewaters.github.io/trips/<
 - Mark the stops to drop first as `cut`. The running-late banner uses them.
 - For each day: one lunch plan near the route plus two verified backups. Coffee and quick bites near the hotel.
 - Give each day a one-line `sub`, a `carry` chip and a sunset time.
+- Give each sight and food stop a `more` blurb with "don't miss" spots (verified shops and dishes). The same content can make a places-guide PDF as an offline backup.
 - Include a jet lag plan for long-haul trips; that one goes in the chat reply or doc, not the site.
 - Before building, show him the day-by-day plan in chat and get his OK. Rewriting data later costs more.
 
