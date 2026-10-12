@@ -170,7 +170,7 @@ function renderStatic(){
  $("#coffee").innerHTML=optHtml(T.coffee);
  $("#lunchAll").innerHTML=DAYS.filter(d=>d.lunch).map(d=>`<details class="lunch"><summary>${esc(d.lbl)} ${+d.d.slice(8)} · ${esc(d.title)}</summary>${optHtml(d.lunch)}</details>`).join("");
  $("#emer").innerHTML=optHtml(T.emergency);
- $("#extras").innerHTML=(T.extras||[]).map(x=>`<h3 class="sec">${esc(x.title)}</h3><div class="list">${optHtml(x.items)}</div>`).join("");
+ $("#extras").innerHTML=(T.extras||[]).map(x=>`<h3 class="sec">${esc(x.title)}</h3>${x.sub?`<p class="daysub">${esc(x.sub)}</p>`:""}<div class="list">${optHtml(x.items)}</div>`).join("");
  $("#taxi").innerHTML=(T.taxi||[]).map(t=>`<div class="opt"><div class="name">${esc(t.name)}</div><div class="zh" style="font-size:18px">${esc(loc(t))}</div><div class="actions"><button class="drv" data-zh="${esc(loc(t))}" data-en="${esc(t.name)}">${esc(DRV.button||"Show driver")}</button></div></div>`).join("");
  if($("#phr"))$("#phr").innerHTML=T.phrases.map(p=>`<div class="zh">${esc(p[0])}</div><div>${esc(p[2])}<div class="say">${esc(p[1])}</div></div>`).join("");
  $("#kv").innerHTML=(T.kv||[]).map(k=>`<dt>${esc(k[0])}</dt><dd>${esc(k[1])}</dd>`).join("")}
